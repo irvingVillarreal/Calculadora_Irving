@@ -7,9 +7,57 @@ require_once(__DIR__.'/Calculadora.php');
 use \PHPUnit\Framework\TestCase;
 class CalculadoraTest extends TestCase{
 
-    public function testSumar(){
+    /**
+    * @dataProvider sumarProveedor
+    */
+    public function testSumar($numero1, $numero2, $resultado_esperado){
         $calculadora = new Calculadora();
-	$resultado_calculado = $calculadora->sumar(3,3);
-        $this->assertEquals(6, $resultado_calculado);
+       // $this->assertEquals(6, $calculadora->sumar(3,3));
+    //   $this->assertSame(6, $calculadora->sumar(3,3));
+        $this->assertEquals($resultado_esperado,$calculadora->sumar($numero1,$numero2));
     }
+
+    /**
+    * @dataProvider sumarProveedor
+    */
+    public function testRestar($numero1, $numero2, $resultado_esperado){
+        //$calculadora = new Calculadora();
+        //$this->assertEquals(6, $calculadora->restar(10,4));
+        $this->assertEquals($resultado_esperado,$calculadora->restar($numero1,$numero2));
+    }
+
+    /**
+    * @dataProvider sumarProveedor
+    */
+    public function testMultiplicar($numero1, $numero2, $resultado_esperado){
+        //$calculadora = new Calculadora();
+        //$this->assertEquals(8, $calculadora->multiplicar(4,2));
+        $this->assertEquals($resultado_esperado,$calculadora->multiplicar($numero1,$numero2));
+    }
+    
+    
+    /**
+    * @dataProvider sumarProveedor
+    */
+    public function testDividir($numero1, $numero2, $resultado_esperado){
+        $calculadora = new Calculadora();
+        //$this->assertEqualsWithDelta(0.33, $calculadora->dividir(1,3),0.004);
+        if ($numero2 != 0){
+            $this->assertEqualsWithDelta($resultado_esperado,$calculadora->dividir($numero1,$numero2), $delta);
+        }else {
+            $this->expectException ("Exception");
+            $calculadora->dividir($numero1, $numero2);
+        }
+        
+    }
+
+    public function testGenerarArreglo(){
+        $calculadora = new Calculadora();
+        //$this->assertContains(5, $calculadora->generarArreglo());        
+        //$this->assertCount(5, $calculadora->generarArreglo());
+        $this->assertNotEmpty($calculadora->generarArreglo());
+    }
+
+
 }
+
