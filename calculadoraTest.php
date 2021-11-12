@@ -63,22 +63,23 @@ class CalculadoraTest extends TestCase{
     
     public function dividirProveedor(){   
         return[
-            'Caso 1' => [-1, -1, 1],
-            'Caso 2' => [0, 0, 0],
-            'Caso 3' => [0, -1, 0],
-            'Caso 4' => [-1, 0, 0]
+            'Caso 1' => [-1, -1, 1, 0],
+            'Caso 2' => [0, 0, "Exception", " "],
+            'Caso 3' => [0, -1, 0, 0],
+            'Caso 4' => [-1, 0, "Exception", " "],
+            'Caso 5' => [1, 3, 0.33, 0.01]
             ];
     }
     /**
     * @dataProvider dividirProveedor
     */
-    public function testDividir($numero1, $numero2, $resultado_esperado){
+    public function testDividir($numero1, $numero2, $resultado_esperado, $delta){
         $calculadora = new Calculadora();
         //$this->assertEqualsWithDelta(0.33, $calculadora->dividir(1,3),0.004);
         if ($numero2 != 0){
             $this->assertEqualsWithDelta($resultado_esperado,$calculadora->dividir($numero1,$numero2), $delta);
         }else {
-            $this->expectException ("Exception");
+            $this->expectException ('Exception');
             $calculadora->dividir($numero1, $numero2);
         }
         
